@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.3.2",
-    "forever": "^0.15.3"
+    "forever": "^0.15.3",
+    "fortnite": "^3.0.0"
   }
 }
