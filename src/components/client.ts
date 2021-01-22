@@ -1,7 +1,8 @@
 import { Client, MessageEmbed, Collection, Message } from 'discord.js';
 import logger from '../middlewares/logger';
-import * as config from '../../config.json';
-import Command from './command'
+import * as config from '../config.json';
+import Command from './command';
+import { readdirSync } from 'fs';
 
 class DiscordClient extends Client {
     public commands: Collection<any, any>;
@@ -44,7 +45,11 @@ class DiscordClient extends Client {
     }
 
     loadCommands() {
-
+        for (let file of readdirSync(`./src/commands/`).filter(file => file.endsWith(".ts"))) {
+            const command = new (require(`../commands/${file}`))(this);
+            this.commands.set(command.help.name, command);
+            this.logger(`${this.user?.username} just loaded ${file}`);
+        };
     }
 
 }
